@@ -46,6 +46,12 @@ RUN apt-get update \
     && chmod +x /wait-for-it.sh \
     && chmod +x /init-run.sh \
     && chmod +x /entrypoint.sh
+# Set env variables
+ENV APACHE_RUN_USER user
+ENV APACHE_RUN_USER_ID 1000
+ENV APACHE_RUN_GROUP user
+ENV APACHE_RUN_GROUP_ID 1000
+
 # Launch the httpd in foreground
 ENTRYPOINT ["/entrypoint.sh"]
 CMD ["apache2-foreground"]
