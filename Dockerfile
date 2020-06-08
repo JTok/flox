@@ -5,6 +5,26 @@
 # do while using this.
 # Ref : https://docs.docker.com/develop/develop-images/multistage-build
 #       https://docs.docker.com/engine/reference/commandline/image_prune
+
+# Set env variables
+ENV APACHE_DOCUMENT_ROOT /var/www/html/public
+ENV APACHE_RUN_USER www-data
+ENV APACHE_RUN_USER_ID 33
+ENV APACHE_RUN_GROUP www-data
+ENV APACHE_RUN_GROUP_ID 33
+ENV FLOX_DB_NAME flox
+ENV FLOX_DB_USER flox_user
+ENV FLOX_DB_PASS flox_pass
+ENV FLOX_DB_HOST mysql 
+ENV FLOX_DB_PORT 3306
+ENV TMDB_API_KEY fce675de8abd8761b876b98554ac3254339
+ENV FLOX_ADMIN_USER admin
+ENV FLOX_ADMIN_PASS admin
+ENV MYSQL_ROOT_PASSWORD password
+ENV MYSQL_DATABASE: flox
+ENV MYSQL_USER: flox_user
+ENV MYSQL_PASSWORD: flox_pass
+
 # start with the official node image and name it
 FROM node:latest AS node
 COPY ./client /flox/client
@@ -46,11 +66,6 @@ RUN apt-get update \
     && chmod +x /wait-for-it.sh \
     && chmod +x /init-run.sh \
     && chmod +x /entrypoint.sh
-# Set env variables
-ENV APACHE_RUN_USER user
-ENV APACHE_RUN_USER_ID 1000
-ENV APACHE_RUN_GROUP user
-ENV APACHE_RUN_GROUP_ID 1000
 
 # Launch the httpd in foreground
 ENTRYPOINT ["/entrypoint.sh"]
